@@ -176,7 +176,7 @@ import 'bootstrap-table';
         // showAlert(($modal.data('id') ? 'Update' : 'Create') + ' item successful!', 'success');
       },
       error: function () {
-        alert('sorry');
+        //alert('sorry');
         $productModal.modal('hide');
         // showAlert(($modal.data('id') ? 'Update' : 'Create') + ' item error!', 'danger');
       }
@@ -208,7 +208,7 @@ import 'bootstrap-table';
       contentType: 'application/json',
       success: function () {
         $deleteProduct.modal('hide');
-        $('#product').bootstrapTable('refresh');
+        $('#products').bootstrapTable('refresh');
         // showAlert(($modal.data('id') ? 'Update' : 'Create') + ' item successful!', 'success');
       },
       error: function () {

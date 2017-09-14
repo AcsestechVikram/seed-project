@@ -12,7 +12,10 @@ const schema = new Schema({
 });
 
 schema.post('remove', function(product){
-  Customer.products.pull(product._id);
-  Customer.save();
+  Customer.findById(product.customer, function (err, customer) {
+      if(err){console.log(err);}
+      customer.products.pull(product);
+      customer.save();
+  });
 });
 export default mongoose.model('Products', schema);
