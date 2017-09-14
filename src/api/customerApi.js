@@ -11,7 +11,6 @@ export function deleteCustomer(id) {
 }
 
 function get(url) {
-  console.log(baseUrl+url); //eslint-disable-line no-console
   return fetch(baseUrl+url).then(onSuccess, onError);
 }
 function del(url) {
@@ -21,7 +20,7 @@ function del(url) {
   return fetch(request).then(onSuccess, onError);
 }
 function onSuccess(response) {
-  return response.json();
+  return response.json;
 }
 function onError(error) {
   console.log(error);  // eslint-disable-line no-console

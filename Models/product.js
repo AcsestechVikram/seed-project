@@ -11,4 +11,4 @@ const schema = new Schema({
   customer: {type: SchemaTypes.ObjectId, ref:'Customers'}
 });
 
-exports default mongoose.model('Products', schema);
+export default mongoose.model('Products', schema);

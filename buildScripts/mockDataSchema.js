@@ -80,10 +80,41 @@ export const schema = {
         "country":{
           "type": "string",
           "faker": "address.country"
+        },
+        "products":{
+          "type": "object",
+          "properties":{
+            "product":{
+              "type":"array",
+              "minItems": 15,
+              "maxItems": 20,
+              "items":{
+                "id": {
+                    "type": "number",
+                    "unique": true,
+                    "minimum": 1
+                  },
+                  "product_name": {
+                      "type": "string",
+                      "faker": "commerce.productName"
+                  },
+                  "product_price":{
+                      "type": "float",
+                      "faker": "commerce.price"
+                  },
+                  "product_catalog": {
+                    "type": "string",
+                    "faker": "commerce.product"
+                  }
+                },
+              "required":["id", "product_name","product_price", "product_catalog"]
+            },
+            "required":["product"]
+          }
         }
       },
-      "required":["id", "firstName", "lastName", "email", "mobile"]
+      "required":["id", "firstName", "lastName", "email", "mobile","country", "products"]
     },
   },
-  "required": ["users","customers","products"]
+  "required": ["users","customers"]
 };

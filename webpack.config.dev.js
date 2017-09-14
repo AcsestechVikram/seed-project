@@ -6,8 +6,9 @@ export default {
     // debug: true,
     devtool: 'inline-source-map',
     entry: [
-        'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
         path.resolve(__dirname, 'src/index'),
+        'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+
         // path.resolve(__dirname, 'assets/app/main.ts')
     ],
     devServer: { noInfo:true},
