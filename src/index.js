@@ -15,6 +15,7 @@ import 'bootstrap-table';
   const API_URL = 'http://'+location.host+'/';
   var $modal = $('#customerModal').modal({show:false});
   var $deleteCustomer = $('#deleteCustomer').modal({show:false});
+  var $deleteProduct = $('#deleteProduct').modal({show:false});
 
   var $productModal = $('#productModal').modal({show:false});
   var $country = $('#countries');
@@ -103,6 +104,13 @@ import 'bootstrap-table';
         field: 'product_catlog',
         title: 'Catalog',
         sortable: true
+      },
+      {
+        field: 'action',
+        title: 'Action',
+        formatter: productactionFormatter,
+        events: 'productActionEvents',
+        width: 100
       }
     ]
   }
@@ -111,6 +119,7 @@ import 'bootstrap-table';
   var $submitButton = $modal.find('.submit');
   var $productSubmitButton = $productModal.find('.submit');
   var $confirmDeletion = $deleteCustomer.find('.submit');
+  var $p_confirmDeletion = $deleteProduct.find('.submit');
   /* Variable End */
 
   $customer.bootstrapTable(customizeTable);
@@ -190,6 +199,24 @@ import 'bootstrap-table';
       }
     });
   });
+
+
+  $p_confirmDeletion.click(function(){
+    $.ajax({
+      url: API_URL + 'products/' + $deleteProduct.data('id'),
+      type: 'delete',
+      contentType: 'application/json',
+      success: function () {
+        $deleteProduct.modal('hide');
+        $('#product').bootstrapTable('refresh');
+        // showAlert(($modal.data('id') ? 'Update' : 'Create') + ' item successful!', 'success');
+      },
+      error: function () {
+        $deleteCustomer.modal('hide');
+        // showAlert(($modal.data('id') ? 'Update' : 'Create') + ' item error!', 'danger');
+      }
+    });
+  });
 window.actionEvents = {
   'click .update': function (e, value, row) {
     showModal($(this).attr('title'), row);
@@ -218,7 +245,20 @@ window.productEvents ={
 
   },
 }
+window.productActionEvents={
+  'click .update': function (e, value, row) {
+    showProductModal($(this).attr('title'), row);
+  },
+  'click .remove': function (e, value, row) {
+    console.log(row);
+    $deleteProduct.data('id', row._id);
+    $deleteProduct.modal('show');
+    //const element = event.target;
 
+    //const elementRow = element.parentNode.parentNode.parentNode;
+    //elementRow.parentNode.removeChild(elementRow);
+  }
+}
 function showModal(title, row) {
   console.log($modal);
   row = row || {
@@ -269,6 +309,15 @@ function actionFormatter() {
 function productFormatter(value){
   return[
   '<a class="check ml10" href="#checkProducts">'+value+'</i></a>'
+  ].join('');
+}
+
+function productactionFormatter(){
+  return [
+    '<a class="update ml10" href="javascript:" title="Update Item"><i class="glyphicon glyphicon-edit"></i></a>',
+    '<a class="remove ml10" href="javascript:void(0)" title="Remove">',
+    '<i class="glyphicon glyphicon-remove"></i>',
+    '</a>'
   ].join('');
 }
 
